@@ -14,6 +14,14 @@
 *.sln.docstates
 **/bin/
 **/obj/
+CarAccessories.Api/bin
+CarAccessories.Api/obj
+CarAccessories.Application/bin
+CarAccessories.Application/obj
+CarAccessories.Domain/bin
+CarAccessories.Domain/obj
+CarAccessories.Infrastructure/bin
+CarAccessories.Infrastructure/obj
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

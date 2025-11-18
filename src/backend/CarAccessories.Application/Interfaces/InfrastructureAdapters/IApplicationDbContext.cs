@@ -7,9 +7,10 @@ namespace CarAccessories.Application.Interfaces.InfrastructureAdapters;
 
 public interface IApplicationDbContext
 {
-    DbSet<User> Users { get; }
-    DbSet<Role> Roles { get; }
-    DbSet<UserRole> UserRoles { get; }
+    DbSet<AuthUser> AuthUsers { get; }
+    DbSet<AuthRole> AuthRoles { get; }
+    DbSet<AuthUserRole> AuthUserRoles { get; }
+    DbSet<AuthUserRefreshToken> AuthUserRefreshTokens { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
     DbSet<TEntity> SetEntity<TEntity>() where TEntity : BaseEntity;

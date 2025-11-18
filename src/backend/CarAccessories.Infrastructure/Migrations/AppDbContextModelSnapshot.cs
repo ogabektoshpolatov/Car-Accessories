@@ -17,7 +17,7 @@ namespace CarAccessories.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.Role", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,14 +36,14 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("AuthRoles");
                 });
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.User", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -53,6 +53,9 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LastLogin")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -64,10 +67,36 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("AuthUsers");
                 });
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("DeviceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuthUserRefreshTokens");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,8 +105,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -85,36 +114,47 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("AuthUserRoles");
                 });
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRefreshToken", b =>
                 {
-                    b.HasOne("CarAccessories.Domain.Entities.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarAccessories.Domain.Entities.User", "User")
-                        .WithMany("UserRoles")
+                    b.HasOne("CarAccessories.Domain.Entities.AuthUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.Role", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.HasOne("CarAccessories.Domain.Entities.AuthRole", "AuthRole")
+                        .WithMany("AuthUserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarAccessories.Domain.Entities.AuthUser", "AuthUser")
+                        .WithMany("AuthUserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuthRole");
+
+                    b.Navigation("AuthUser");
                 });
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.User", b =>
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthRole", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("AuthUserRoles");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
+                {
+                    b.Navigation("AuthUserRoles");
                 });
 #pragma warning restore 612, 618
         }
