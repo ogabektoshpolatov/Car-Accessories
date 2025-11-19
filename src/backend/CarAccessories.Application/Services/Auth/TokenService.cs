@@ -1,19 +1,19 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using CarAccessories.Application.Constants;
+using CarAccessories.Application.Common.Constants;
+using CarAccessories.Application.Common.Settings;
 using CarAccessories.Application.Interfaces.Auth;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Models.Auth;
 using CarAccessories.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CarAccessories.Application.Services.Auth;
 
-public class TokenService(IApplicationDbContext dbContext):ITokenService
+public class TokenService(IApplicationDbContext dbContext, IOptions<JwtSettings> jwtSettings):ITokenService
 {
+    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
     public async Task<TokenResponseModel> GenerateTokenAsync(AuthUser foundUser, IList<string> roles, string? deviceId, CancellationToken ct = default)
     {
         var utcNow = DateTime.UtcNow;
@@ -29,12 +29,12 @@ public class TokenService(IApplicationDbContext dbContext):ITokenService
         };
         
         var jwtToken  = new JwtSecurityToken(
-            issuer: AuthOptions.Issuer,
-            audience: AuthOptions.Audience,
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
             claims: claims,
             notBefore:utcNow ,
-            expires: utcNow.Add(TimeSpan.FromMinutes(AuthOptions.ExpireMinutes)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
+            expires: utcNow.Add(TimeSpan.FromMinutes(_jwtSettings.ExpireMinutes)),
+            signingCredentials: new SigningCredentials(_jwtSettings.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
         );
         
         var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
@@ -43,8 +43,8 @@ public class TokenService(IApplicationDbContext dbContext):ITokenService
         {
             AccessToken = accessToken,
             RefreshToken = "",
-            AccessTokenExpiration = utcNow.AddMinutes(AuthOptions.ExpireMinutes),
-            RefreshTokenExpiration = utcNow.AddDays(7)
+            AccessTokenExpiration = utcNow.Add(TimeSpan.FromMinutes(_jwtSettings.ExpireMinutes)),
+            RefreshTokenExpiration = utcNow.Add(TimeSpan.FromMinutes(_jwtSettings.ExpireMinutesRefresh))
         };
     }
 

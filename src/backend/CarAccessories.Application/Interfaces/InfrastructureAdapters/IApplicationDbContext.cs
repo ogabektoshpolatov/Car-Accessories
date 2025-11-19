@@ -1,7 +1,5 @@
 ﻿using CarAccessories.Domain.Common;
 using CarAccessories.Domain.Entities;
-using CarAccessories.Domain.Entities.Product;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CarAccessories.Application.Interfaces.InfrastructureAdapters;

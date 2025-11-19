@@ -1,4 +1,4 @@
-namespace CarAccessories.Application.Constants;
+namespace CarAccessories.Application.Common.Constants;
 
 public class StaticClaims
 {

@@ -1,7 +1,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace CarAccessories.Api.Helpers;
+namespace CarAccessories.Application.Common.ResponseData;
 
 public class ResponseData<T>
 {

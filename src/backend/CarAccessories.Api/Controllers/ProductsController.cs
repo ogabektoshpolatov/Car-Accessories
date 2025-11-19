@@ -1,4 +1,4 @@
-using CarAccessories.Api.Helpers;
+using CarAccessories.Application.Common.ResponseData;
 using CarAccessories.Application.Interfaces.Product;
 using CarAccessories.Application.Models.Product;
 using Microsoft.AspNetCore.Mvc;

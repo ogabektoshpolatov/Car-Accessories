@@ -1,7 +1,6 @@
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces.Product;
 using CarAccessories.Application.Models.Product;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarAccessories.Application.Services.Product;
 
