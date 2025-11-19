@@ -1,4 +1,5 @@
-﻿using CarAccessories.Infrastructure.Persistence;
+﻿using CarAccessories.Application.Interfaces.InfrastructureAdapters;
+using CarAccessories.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,5 +14,7 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options => 
             options.UseSqlite(connectionString)
                 .EnableSensitiveDataLogging()); // Database loglarini olish uchun kerak. 
+
+        services.AddScoped<IApplicationDbContext, AppDbContext>();
     }
 }

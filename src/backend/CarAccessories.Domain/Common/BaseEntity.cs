@@ -5,24 +5,15 @@ namespace CarAccessories.Domain.Common;
 public class BaseEntity
 {
     public int Id { get; set; }
-
-    private readonly List<BaseEvent> _domainEvents = [];
+    public DateTimeOffset Created { get; set; }
+    public int? CreatedBy { get; set; }
+    public DateTimeOffset LastModified { get; set; }
+    public int? LastModifiedBy { get; set; }
+    public bool IsActive { get; set; } = true;
 
     [NotMapped]
-    public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public string? CreatedByFullName { get; set; }
 
-    public void AddDomainEvent(BaseEvent domainEvent)
-    {
-        _domainEvents.Add(domainEvent);
-    }
-
-    public void RemoveDomainEvent(BaseEvent domainEvent)
-    {
-        _domainEvents.Remove(domainEvent);
-    }
-
-    public void ClearDomainEvents()
-    {
-        _domainEvents.Clear();
-    }
+    [NotMapped]
+    public string? LastModifiedByFullName { get; set; }
 }
