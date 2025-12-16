@@ -1,6 +1,6 @@
-@CarAccessories.Api_HostAddress = http://localhost:5209
+@CarAccessories.Server_HostAddress = http://localhost:5209
 
-GET {{CarAccessories.Api_HostAddress}}/weatherforecast/
+GET {{CarAccessories.Server_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

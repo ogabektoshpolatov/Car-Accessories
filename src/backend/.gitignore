@@ -23,6 +23,7 @@ CarAccessories.Domain/obj
 CarAccessories.Infrastructure/bin
 CarAccessories.Infrastructure/obj
 
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

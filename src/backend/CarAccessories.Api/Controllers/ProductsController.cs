@@ -3,7 +3,7 @@ using CarAccessories.Application.Interfaces.Product;
 using CarAccessories.Application.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarAccessories.Api.Controllers;
+namespace CarAccessories.Server.Controllers;
 [ApiController]
 [Route("/api/[controller]")]
 public class ProductsController(IProductService productService):ControllerBase
