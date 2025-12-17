@@ -1,5 +1,5 @@
 using CarAccessories.Application.Common.ResponseData;
-using CarAccessories.Application.Interfaces.Product;
+using CarAccessories.Application.Interfaces;
 using CarAccessories.Application.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 

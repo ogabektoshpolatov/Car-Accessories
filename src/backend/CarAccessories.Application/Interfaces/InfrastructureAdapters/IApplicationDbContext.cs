@@ -12,7 +12,7 @@ public interface IApplicationDbContext
     DbSet<AuthUserRole> AuthUserRoles { get; }
     DbSet<AuthUserRefreshToken> AuthUserRefreshTokens { get; }
     #endregion
-    DbSet<Domain.Entities.Product.Product> Products { get; }
+    DbSet<Product> Products { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
     DbSet<TEntity> SetEntity<TEntity>() where TEntity : BaseEntity;

@@ -1,6 +1,6 @@
 using CarAccessories.Application.Models.Product;
 
-namespace CarAccessories.Application.Interfaces.Product;
+namespace CarAccessories.Application.Interfaces;
 
 public interface IProductService
 {

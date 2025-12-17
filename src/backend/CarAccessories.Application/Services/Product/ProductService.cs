@@ -1,5 +1,5 @@
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
-using CarAccessories.Application.Interfaces.Product;
+using CarAccessories.Application.Interfaces;
 using CarAccessories.Application.Models.Product;
 
 namespace CarAccessories.Application.Services.Product;
