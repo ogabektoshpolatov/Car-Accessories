@@ -24,4 +24,9 @@ public class ProductService(IApplicationDbContext dbContext):IProductService
 
         return productsResponse;
     }
+
+    public Task<int> CreateAsync(CreateOrUpdateProductRequestModel requestOrUpdateProductModel, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
 }

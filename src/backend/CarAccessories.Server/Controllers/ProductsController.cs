@@ -9,7 +9,11 @@ namespace CarAccessories.Server.Controllers;
 [Route("/api/[controller]")]
 public class ProductsController(IProductService productService):ControllerBase
 {
-    [HttpPost]
-    public async Task<ResponseData<List<ProductResponseModel>>> GetAll(CancellationToken ct) =>
+    [HttpPost("griddata")]
+    public async Task<ResponseData<List<ProductResponseModel>>> GetAllProduct(CancellationToken ct) =>
         await productService.GetAllAsync(ct);
+
+    [HttpPost]
+    public async Task<ResponseData<int>> CreateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) =>
+        await productService.CreateAsync(requestModel, ct);
 }
