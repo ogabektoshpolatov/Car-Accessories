@@ -1,32 +1,40 @@
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Application.Models.Product;
+using CarAccessories.Domain.Entities;
 
-namespace CarAccessories.Application.Services.Product;
+namespace CarAccessories.Application.Services;
 
-public class ProductService(IApplicationDbContext dbContext):IProductService
+public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IProductService
 {
     public async Task<List<ProductResponseModel>> GetAllAsync(CancellationToken ct = default)
     {
-        var products = await dbContext.Products.ToListAsync(ct);
-        var productsResponse = new List<ProductResponseModel>();
-        
-        if(!products.Any()) return productsResponse;
+        var products = await dbContext.Products
+            .Where(p => p.IsActive)
+            .OrderByDescending(p => p.Created)
+            .ToListAsync(ct);
 
-        foreach (var product in products)
-        {
-            var productResponse = new ProductResponseModel();
-            productResponse.Name = product.Name;
-            productResponse.Description = product.Description;
-            productResponse.Price = product.Price;
-            productsResponse.Add(productResponse);
-        }
-
-        return productsResponse;
+        return mapper.Map<List<ProductResponseModel>>(products);
     }
 
-    public Task<int> CreateAsync(CreateOrUpdateProductRequestModel requestOrUpdateProductModel, CancellationToken ct = default)
+    public async Task<bool> CreateAsync(CreateOrUpdateProductRequestModel requestOrUpdateProductModel, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var category = await dbContext.Categories.FindAsync(requestOrUpdateProductModel.CategoryId);
+        var product = new Product()
+        {
+            CategoryId = requestOrUpdateProductModel.CategoryId,
+            Name = requestOrUpdateProductModel.Name,
+            Description = requestOrUpdateProductModel.Description,
+            Price = requestOrUpdateProductModel.Price,
+            OldPrice = requestOrUpdateProductModel.OldPrice,
+            Slug = requestOrUpdateProductModel.Slug,
+            Stock = requestOrUpdateProductModel.Stock,
+            IsNew = requestOrUpdateProductModel.IsNew,
+            IsActive = requestOrUpdateProductModel.IsActive,
+            IsOnSale = requestOrUpdateProductModel.IsOnSale
+        };
+        
+        await dbContext.Products.AddAsync(product, ct);
+        return await dbContext.SaveChangesAsync(ct) > 1;
     }
 }

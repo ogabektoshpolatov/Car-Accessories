@@ -12,5 +12,4 @@ public class CreateOrUpdateProductRequestModel
     public bool IsNew { get; set; }
     public bool IsOnSale { get; set; }
     public bool IsActive { get; set; } = true;
-    public List<string>? ImageUrls { get; set; } 
 }

@@ -14,6 +14,6 @@ public class ProductsController(IProductService productService):ControllerBase
         await productService.GetAllAsync(ct);
 
     [HttpPost]
-    public async Task<ResponseData<int>> CreateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) =>
+    public async Task<ResponseData<bool>> CreateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) =>
         await productService.CreateAsync(requestModel, ct);
 }

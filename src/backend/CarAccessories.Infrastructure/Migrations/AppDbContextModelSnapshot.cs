@@ -36,7 +36,7 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthRoles");
+                    b.ToTable("AuthRole");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
@@ -67,33 +67,7 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthUsers");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("DeviceId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RefreshToken")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTimeOffset>("UpdateDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AuthUserRefreshTokens");
+                    b.ToTable("AuthUser");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
@@ -114,7 +88,81 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuthUserRoles");
+                    b.ToTable("AuthUserRole");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Category", b =>
@@ -154,7 +202,7 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Product", b =>
@@ -167,9 +215,6 @@ namespace CarAccessories.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -252,18 +297,7 @@ namespace CarAccessories.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRefreshToken", b =>
-                {
-                    b.HasOne("CarAccessories.Domain.Entities.AuthUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
@@ -283,6 +317,25 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Navigation("AuthRole");
 
                     b.Navigation("AuthUser");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.CartItem", b =>
+                {
+                    b.HasOne("CarAccessories.Domain.Entities.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarAccessories.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Product", b =>
@@ -315,6 +368,11 @@ namespace CarAccessories.Infrastructure.Migrations
             modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
                 {
                     b.Navigation("AuthUserRoles");
+                });
+
+            modelBuilder.Entity("CarAccessories.Domain.Entities.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Category", b =>

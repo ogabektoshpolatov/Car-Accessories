@@ -14,7 +14,6 @@ public class Product:BaseEntity
     public bool IsNew { get; set; }
     public bool IsOnSale { get; set; }
     public bool IsActive { get; set; } = true;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public Category Category { get; set; } = null!;
     public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
 }
