@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAccessories.Server", "CarAccessories.Api\CarAccessories.Server.csproj", "{FB277AF7-086B-4AEC-910D-228985B398AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAccessories.Server", "CarAccessories.Server\CarAccessories.Server.csproj", "{FB277AF7-086B-4AEC-910D-228985B398AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAccessories.Application", "CarAccessories.Application\CarAccessories.Application.csproj", "{BB9A1ED6-B357-4095-B083-378493EBA777}"
 EndProject
