@@ -8,12 +8,12 @@ public class BaseAuditResponseModel
     public int Id { get; set; }
 
     [JsonPropertyOrder(99)]
-    public DateTimeOffset Created { get; set; }
+    public DateTime Created { get; set; }
     [JsonPropertyOrder(100)]
     public string? CreatedByFullName { get; set; }
 
     [JsonPropertyOrder(101)]
-    public DateTimeOffset LastModified { get; set; }
+    public DateTime LastModified { get; set; }
     [JsonPropertyOrder(102)]
     public string? LastModifiedByFullName { get; set; }
     [JsonPropertyOrder(103)]

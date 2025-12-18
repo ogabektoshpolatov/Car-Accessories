@@ -27,5 +27,29 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        
+        modelBuilder.Entity<Product>()
+            .Property(x => x.Price)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Product>()
+            .Property(x => x.OldPrice)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<ProductImage>()
+            .HasOne(x => x.Product)
+            .WithMany(x => x.Images)
+            .HasForeignKey(x => x.ProductId);
+
+        modelBuilder.Entity<CartItem>()
+            .Property(x => x.Price)
+            .HasPrecision(18, 2);
+        
+        modelBuilder.Entity<Category>()
+            .HasMany(e => e.Children)
+            .WithOne(e => e.Parent)
+            .HasForeignKey(e => e.ParentId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

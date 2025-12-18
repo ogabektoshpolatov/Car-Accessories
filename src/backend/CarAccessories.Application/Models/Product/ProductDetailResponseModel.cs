@@ -1,9 +1,6 @@
-using CarAccessories.Application.Models.Base;
-using CarAccessories.Domain.Entities;
+﻿namespace CarAccessories.Application.Models.Product;
 
-namespace CarAccessories.Application.Models.Product;
-
-public class ProductResponseModel:BaseAuditResponseModel
+public class ProductDetailResponseModel
 {
     public string Name { get; set; } = null!;  
     public string? Description { get; set; } 

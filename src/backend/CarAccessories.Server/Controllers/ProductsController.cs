@@ -10,10 +10,22 @@ namespace CarAccessories.Server.Controllers;
 public class ProductsController(IProductService productService):ControllerBase
 {
     [HttpPost("griddata")]
-    public async Task<ResponseData<List<ProductResponseModel>>> GetAllProduct(CancellationToken ct) =>
-        await productService.GetAllAsync(ct);
+    public async Task<ResponseData<List<ProductResponseModel>>> GetAllProduct(CancellationToken ct) 
+        => await productService.GetAllAsync(ct);
+    
+    [HttpGet("{id}")]
+    public async Task<ResponseData<ProductDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 
+        => await productService.GetByIdAsync(productId, ct);
 
     [HttpPost]
-    public async Task<ResponseData<bool>> CreateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) =>
-        await productService.CreateAsync(requestModel, ct);
+    public async Task<ResponseData<bool>> CreateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) 
+        => await productService.CreateAsync(requestModel, ct);
+    
+    [HttpPut]
+    public async Task<ResponseData<ProductDetailResponseModel>> UpdateProduct(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct) 
+        => await productService.UpdateAsync(requestModel, ct);
+    
+    [HttpDelete("{id}")]
+    public async Task<ResponseData<bool>> DeleteProductById(int productId, CancellationToken ct) 
+        => await productService.DeleteAsync(productId, ct);
 }
