@@ -1,6 +1,6 @@
-﻿using CarAccessories.Application.Models.Category;
-using CarAccessories.Application.Models.Product;
-using CarAccessories.Domain.Entities;
+﻿using CarAccessories.Domain.Entities;
+using CarAccessories.Shared.Requests;
+using CarAccessories.Shared.Responses;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace CarAccessories.Application.Mappings;
@@ -11,5 +11,6 @@ public class CategoryMappings:Profile
     {
         CreateMap<Category, CategoryResponseModel>();
         CreateMap<Category, CategoryDetailResponseModel>();
+        CreateMap<CreateOrUpdateCategoryRequestModel, Category>();;
     }
 }

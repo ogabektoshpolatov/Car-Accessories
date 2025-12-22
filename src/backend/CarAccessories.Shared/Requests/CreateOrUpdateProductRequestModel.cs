@@ -1,6 +1,8 @@
-using CarAccessories.Application.Models.Base;
 
-namespace CarAccessories.Application.Models.Product;
+
+using CarAccessories.Shared.Common;
+
+namespace CarAccessories.Shared.Requests;
 
 public class CreateOrUpdateProductRequestModel:BaseAuditResponseModel
 {

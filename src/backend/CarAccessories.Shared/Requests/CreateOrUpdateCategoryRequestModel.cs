@@ -1,7 +1,6 @@
-﻿using CarAccessories.Application.Models.Base;
-using CarAccessories.Domain.Common;
+﻿using CarAccessories.Shared.Common;
 
-namespace CarAccessories.Application.Models.Category;
+namespace CarAccessories.Shared.Requests;
 
 public class CreateOrUpdateCategoryRequestModel:BaseAuditResponseModel
 {

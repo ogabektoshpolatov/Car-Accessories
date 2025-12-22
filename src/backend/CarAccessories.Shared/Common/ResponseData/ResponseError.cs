@@ -1,4 +1,4 @@
-namespace CarAccessories.Application.Common.ResponseData;
+namespace CarAccessories.Shared.Common.ResponseData;
 
 public class ResponseError
 {

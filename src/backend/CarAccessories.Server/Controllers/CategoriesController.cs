@@ -1,7 +1,7 @@
-﻿using CarAccessories.Application.Common.ResponseData;
+﻿using CarAccessories.Shared.Common.ResponseData;
 using CarAccessories.Application.Interfaces;
-using CarAccessories.Application.Models.Category;
-using CarAccessories.Application.Models.Product;
+using CarAccessories.Shared.Requests;
+using CarAccessories.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarAccessories.Server.Controllers;
@@ -14,7 +14,7 @@ public class CategoriesController(ICategoryService categoryService):ControllerBa
     public async Task<ResponseData<List<CategoryResponseModel>>> GetAllCategory(CancellationToken ct) 
         => await categoryService.GetAllAsync(ct);
     
-    [HttpGet("{id}")]
+    [HttpGet("{productId}")]
     public async Task<ResponseData<CategoryDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 
         => await categoryService.GetByIdAsync(productId, ct);
 
@@ -26,7 +26,7 @@ public class CategoriesController(ICategoryService categoryService):ControllerBa
     public async Task<ResponseData<CategoryDetailResponseModel>> UpdateProduct(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct) 
         => await categoryService.UpdateAsync(requestModel, ct);
     
-    [HttpDelete("{id}")]
+    [HttpDelete("{productId}")]
     public async Task<ResponseData<bool>> DeleteProductById(int productId, CancellationToken ct)
         => await categoryService.DeleteAsync(productId, ct);
 }

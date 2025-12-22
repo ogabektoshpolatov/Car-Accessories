@@ -1,9 +1,9 @@
 ﻿using AutoMapper.QueryableExtensions;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
-using CarAccessories.Application.Models.Category;
-using CarAccessories.Application.Models.Product;
 using CarAccessories.Domain.Entities;
+using CarAccessories.Shared.Requests;
+using CarAccessories.Shared.Responses;
 
 namespace CarAccessories.Application.Services;
 
@@ -45,22 +45,26 @@ public class CategoryService(IApplicationDbContext dbContext, IMapper mapper):IC
         return foundCategory;
     }
 
-    public async Task<CategoryDetailResponseModel> UpdateAsync(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct = default)
+    public async Task<CategoryDetailResponseModel> UpdateAsync(
+        CreateOrUpdateCategoryRequestModel requestModel,
+        CancellationToken ct = default)
     {
         if (requestModel.Id <= 0)
             throw new ArgumentException("Id must be greater than zero.", nameof(requestModel));
+
+        var foundEntity = await dbContext.Categories
+            .FirstOrDefaultAsync(c => c.Id == requestModel.Id, ct);
+
+        if (foundEntity is null)
+            throw new ArgumentException(
+                $"Category with ID {requestModel.Id} does not exist.",
+                nameof(requestModel));
         
-        var entity = await dbContext.Categories
-            .FirstOrDefaultAsync(p => p.Id == requestModel.Id, ct);
-        
-        if(entity is null)
-            throw new ArgumentException($"Category with ID {requestModel.Id} does not exist.", nameof(requestModel));
-        
-        mapper.Map(requestModel, entity);
+        mapper.Map(requestModel, foundEntity);
 
         await dbContext.SaveChangesAsync(ct);
 
-        return mapper.Map<CategoryDetailResponseModel>(entity);
+        return mapper.Map<CategoryDetailResponseModel>(foundEntity);
     }
 
     public async Task<bool> DeleteAsync(int categoryId, CancellationToken ct = default)

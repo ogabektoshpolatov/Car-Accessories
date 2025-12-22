@@ -1,8 +1,9 @@
 using AutoMapper.QueryableExtensions;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
-using CarAccessories.Application.Models.Product;
 using CarAccessories.Domain.Entities;
+using CarAccessories.Shared.Requests;
+using CarAccessories.Shared.Responses;
 
 namespace CarAccessories.Application.Services;
 

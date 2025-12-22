@@ -1,6 +1,8 @@
-﻿namespace CarAccessories.Application.Models.Product;
+using CarAccessories.Shared.Common;
 
-public class ProductDetailResponseModel
+namespace CarAccessories.Shared.Responses;
+
+public class ProductResponseModel:BaseAuditResponseModel
 {
     public string Name { get; set; } = null!;  
     public string? Description { get; set; } 

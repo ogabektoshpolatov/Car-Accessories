@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace CarAccessories.Application.Models.Base;
+namespace CarAccessories.Shared.Common;
 
 public class BaseAuditResponseModel
 {

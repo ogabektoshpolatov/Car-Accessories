@@ -1,4 +1,6 @@
-﻿using CarAccessories.Application.Models.Category;
+﻿
+using CarAccessories.Shared.Requests;
+using CarAccessories.Shared.Responses;
 
 namespace CarAccessories.Application.Interfaces;
 
