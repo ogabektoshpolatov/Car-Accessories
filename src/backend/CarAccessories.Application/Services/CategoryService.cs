@@ -1,4 +1,5 @@
 ﻿using AutoMapper.QueryableExtensions;
+using CarAccessories.Application.Common.QueryFilter;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Domain.Entities;
@@ -22,14 +23,16 @@ public class CategoryService(IApplicationDbContext dbContext, IMapper mapper):IC
         return await dbContext.SaveChangesAsync(ct) > 0;
     }
 
-    public async Task<List<CategoryResponseModel>> GetAllAsync(CancellationToken ct = default)
+    public async Task<PageList<CategoryResponseModel>> GetAllAsync(FilterRequest filterRequest, CancellationToken ct = default)
     {
-        var categories = await dbContext.Categories
+        var query = dbContext.Categories
+            .AsNoTracking()
             .Where(x => x.IsActive)
-            .OrderByDescending(x => x.Created)
-            .ToListAsync(ct);
-        
-        return mapper.Map<List<CategoryResponseModel>>(categories);
+            .OrderByDescending(x => x.Created);
+
+        return await query
+            .ProjectTo<CategoryResponseModel>(mapper.ConfigurationProvider)
+            .ToPageListAsync(filterRequest, ct, applyAutoSort:false);
     }
 
     public async Task<CategoryDetailResponseModel> GetByIdAsync(int categoryId, CancellationToken ct = default)

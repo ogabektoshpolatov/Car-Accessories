@@ -1,4 +1,5 @@
 using AutoMapper.QueryableExtensions;
+using CarAccessories.Application.Common.QueryFilter;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Domain.Entities;
@@ -9,14 +10,15 @@ namespace CarAccessories.Application.Services;
 
 public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IProductService
 {
-    public async Task<List<ProductResponseModel>> GetAllAsync(CancellationToken ct = default)
+    public async Task<PageList<ProductResponseModel>> GetAllAsync(FilterRequest filterRequest, CancellationToken ct = default)
     {
-        var products = await dbContext.Products
-            .Where(p => p.IsActive)
-            .OrderByDescending(p => p.Created)
-            .ToListAsync(ct);
+        var query = dbContext.Products
+            .AsNoTracking()
+            .Where(x => x.IsActive);
 
-        return mapper.Map<List<ProductResponseModel>>(products);
+        return await query
+            .ProjectTo<ProductResponseModel>(mapper.ConfigurationProvider)
+            .ToPageListAsync(filterRequest, ct);
     }
 
     public async Task<bool> CreateAsync(CreateOrUpdateProductRequestModel requestOrUpdateProductModel, CancellationToken ct = default)

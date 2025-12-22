@@ -1,4 +1,5 @@
-﻿using CarAccessories.Shared.Common.ResponseData;
+﻿using CarAccessories.Application.Common.QueryFilter;
+using CarAccessories.Shared.Common.ResponseData;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Shared.Requests;
 using CarAccessories.Shared.Responses;
@@ -11,8 +12,10 @@ namespace CarAccessories.Server.Controllers;
 public class CategoriesController(ICategoryService categoryService):ControllerBase
 {
     [HttpPost("get-all")]
-    public async Task<ResponseData<List<CategoryResponseModel>>> GetAllCategory(CancellationToken ct) 
-        => await categoryService.GetAllAsync(ct);
+    public async Task<ResponseData<PageList<CategoryResponseModel>>> GetAllCategory(
+        FilterRequest filterRequest, 
+        CancellationToken ct) 
+        => await categoryService.GetAllAsync(filterRequest, ct);
     
     [HttpGet("{productId}")]
     public async Task<ResponseData<CategoryDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 

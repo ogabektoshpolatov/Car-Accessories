@@ -1,3 +1,4 @@
+using CarAccessories.Application.Common.QueryFilter;
 using CarAccessories.Shared.Common.ResponseData;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Shared.Requests;
@@ -11,8 +12,10 @@ namespace CarAccessories.Server.Controllers;
 public class ProductsController(IProductService productService):ControllerBase
 {
     [HttpPost("griddata")]
-    public async Task<ResponseData<List<ProductResponseModel>>> GetAllProduct(CancellationToken ct) 
-        => await productService.GetAllAsync(ct);
+    public async Task<ResponseData<PageList<ProductResponseModel>>> GetAllProduct(
+        FilterRequest filterRequest, 
+        CancellationToken ct) 
+        => await productService.GetAllAsync(filterRequest,ct);
     
     [HttpGet("{productId}")]
     public async Task<ResponseData<ProductDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 
