@@ -34,8 +34,14 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IPr
             IsOnSale = requestOrUpdateProductModel.IsOnSale
         };
         
+        var categoryExists = await dbContext.Categories
+            .AnyAsync(c => c.Id == requestOrUpdateProductModel.CategoryId, ct);
+
+        if (!categoryExists)
+            throw new ArgumentException($"Category with the given ID {requestOrUpdateProductModel.CategoryId} does not exist.", nameof(requestOrUpdateProductModel));
+        
         await dbContext.Products.AddAsync(product, ct);
-        return await dbContext.SaveChangesAsync(ct) > 1;
+        return await dbContext.SaveChangesAsync(ct) > 0;
     }
 
     public async Task<ProductDetailResponseModel> GetByIdAsync(int productId, CancellationToken ct = default)
@@ -62,6 +68,12 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IPr
         if(entity is null)
             throw new ArgumentException($"Product with ID {requestModel.Id} does not exist.", nameof(requestModel));
         
+        var categoryExists = await dbContext.Categories
+            .AnyAsync(c => c.Id == requestModel.CategoryId, ct);
+
+        if (!categoryExists)
+            throw new ArgumentException($"Category with the given ID {requestModel.CategoryId} does not exist.", nameof(requestModel));
+        
         mapper.Map(requestModel, entity);
 
         await dbContext.SaveChangesAsync(ct);
@@ -78,6 +90,6 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IPr
             throw new ArgumentException($"Product with ID {productId} does not exist.", nameof(productId));
         
         dbContext.Products.Remove(entity);
-        return await dbContext.SaveChangesAsync(ct) > 1;
+        return await dbContext.SaveChangesAsync(ct) > 0;
     }
 }

@@ -76,6 +76,6 @@ public class CategoryService(IApplicationDbContext dbContext, IMapper mapper):IC
             throw new ArgumentException($"Product with ID {categoryId} does not exist.", nameof(categoryId));
         
         dbContext.Categories.Remove(entity);
-        return await dbContext.SaveChangesAsync(ct) > 1;
+        return await dbContext.SaveChangesAsync(ct) > 0;
     }
 }

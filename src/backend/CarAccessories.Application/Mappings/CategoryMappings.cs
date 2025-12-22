@@ -10,7 +10,10 @@ public class CategoryMappings:Profile
     public CategoryMappings()
     {
         CreateMap<Category, CategoryResponseModel>();
-        CreateMap<Category, CategoryDetailResponseModel>();
+        CreateMap<Category, CategoryDetailResponseModel>()
+            .ForMember(
+                dest => dest.ParentCategory, 
+                opt => opt.MapFrom(src => src.Parent));
         CreateMap<CreateOrUpdateCategoryRequestModel, Category>();;
     }
 }
