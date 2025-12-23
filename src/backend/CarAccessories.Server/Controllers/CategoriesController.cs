@@ -7,19 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarAccessories.Server.Controllers;
 
-[ApiController]
-[Route("/api/[controller]")]
-public class CategoriesController(ICategoryService categoryService):ControllerBase
+public class CategoriesController(ICategoryService categoryService):BaseController
 {
-    [HttpPost("get-all")]
+    [HttpPost]
     public async Task<ResponseData<PageList<CategoryResponseModel>>> GetAllCategory(
         FilterRequest filterRequest, 
         CancellationToken ct) 
         => await categoryService.GetAllAsync(filterRequest, ct);
     
-    [HttpGet("{productId}")]
-    public async Task<ResponseData<CategoryDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 
-        => await categoryService.GetByIdAsync(productId, ct);
+    [HttpGet("{categoryId}")]
+    public async Task<ResponseData<CategoryDetailResponseModel>> GetProductById([FromRoute] int categoryId, CancellationToken ct) 
+        => await categoryService.GetByIdAsync(categoryId, ct);
 
     [HttpPost]
     public async Task<ResponseData<bool>> CreateCategory(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct) 
@@ -29,7 +27,7 @@ public class CategoriesController(ICategoryService categoryService):ControllerBa
     public async Task<ResponseData<CategoryDetailResponseModel>> UpdateProduct(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct) 
         => await categoryService.UpdateAsync(requestModel, ct);
     
-    [HttpDelete("{productId}")]
-    public async Task<ResponseData<bool>> DeleteProductById(int productId, CancellationToken ct)
-        => await categoryService.DeleteAsync(productId, ct);
+    [HttpDelete("{categoryId}")]
+    public async Task<ResponseData<bool>> DeleteProductById([FromRoute] int categoryId, CancellationToken ct)
+        => await categoryService.DeleteAsync(categoryId, ct);
 }

@@ -14,11 +14,12 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IPr
     {
         var query = dbContext.Products
             .AsNoTracking()
-            .Where(x => x.IsActive);
+            .Where(x => x.IsActive)
+            .OrderByDescending(x => x.Created);
 
         return await query
             .ProjectTo<ProductResponseModel>(mapper.ConfigurationProvider)
-            .ToPageListAsync(filterRequest, ct);
+            .ToPageListAsync(filterRequest, ct, applyAutoSort:false);
     }
 
     public async Task<bool> CreateAsync(CreateOrUpdateProductRequestModel requestOrUpdateProductModel, CancellationToken ct = default)

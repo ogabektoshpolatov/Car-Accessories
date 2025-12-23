@@ -7,18 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarAccessories.Server.Controllers;
 
-[ApiController]
-[Route("/api/[controller]")]
-public class ProductsController(IProductService productService):ControllerBase
+public class ProductsController(IProductService productService):BaseController
 {
-    [HttpPost("griddata")]
+    [HttpPost]
     public async Task<ResponseData<PageList<ProductResponseModel>>> GetAllProduct(
         FilterRequest filterRequest, 
         CancellationToken ct) 
         => await productService.GetAllAsync(filterRequest,ct);
     
     [HttpGet("{productId}")]
-    public async Task<ResponseData<ProductDetailResponseModel>> GetProductById(int productId, CancellationToken ct) 
+    public async Task<ResponseData<ProductDetailResponseModel>> GetProductById([FromRoute] int productId, CancellationToken ct) 
         => await productService.GetByIdAsync(productId, ct);
 
     [HttpPost]
@@ -30,6 +28,6 @@ public class ProductsController(IProductService productService):ControllerBase
         => await productService.UpdateAsync(requestModel, ct);
     
     [HttpDelete("{productId}")]
-    public async Task<ResponseData<bool>> DeleteProductById(int productId, CancellationToken ct) 
+    public async Task<ResponseData<bool>> DeleteProductById([FromRoute] int productId, CancellationToken ct) 
         => await productService.DeleteAsync(productId, ct);
 }
