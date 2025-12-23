@@ -15,7 +15,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseRouting();
+
+app.UseDefaultFiles();  // Serves index.html by default
+app.UseStaticFiles(); 
 app.MapControllers();
 app.UseHttpsRedirection();
 
