@@ -14,9 +14,5 @@
   <ItemGroup>
     <ProjectReference Include="..\CarAccessories.Shared\CarAccessories.Shared.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <OutputPath>$(SolutionDir)CarAccessories.Server\wwwroot</OutputPath>
-  </PropertyGroup>
-
+  
 </Project>

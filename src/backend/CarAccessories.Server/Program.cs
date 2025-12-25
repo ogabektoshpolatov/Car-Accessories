@@ -8,20 +8,32 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.AddPresentation();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseWebAssemblyDebugging();
 }
 
-app.UseRouting();
-
-app.UseDefaultFiles();  // Serves index.html by default
-app.UseStaticFiles(); 
-app.MapControllers();
 app.UseHttpsRedirection();
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseCors("AllowAll");
+
+app.MapControllers();
+app.MapFallbackToFile("index.html"); // Bu muhim!
 
 app.Run();
-
