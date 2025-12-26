@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarAccessories.Application\CarAccessories.Application.csproj" />
+    <ProjectReference Include="..\CarAccessories.Domain\CarAccessories.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Extensions\" />
   </ItemGroup>
 

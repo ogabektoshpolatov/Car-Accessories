@@ -97,7 +97,7 @@ namespace CarAccessories.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -106,7 +106,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("LastModifiedBy")
@@ -129,7 +129,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -138,7 +138,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("LastModifiedBy")
@@ -169,7 +169,7 @@ namespace CarAccessories.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -181,7 +181,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("LastModifiedBy")
@@ -210,7 +210,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -228,7 +228,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsOnSale")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("LastModifiedBy")
@@ -262,7 +262,7 @@ namespace CarAccessories.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("CreatedBy")
@@ -278,7 +278,7 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
+                    b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("LastModifiedBy")
