@@ -15,7 +15,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
     // public DbSet<AuthUserRefreshToken> AuthUserRefreshTokens => Set<AuthUserRefreshToken>();
     // #endregion
     public DbSet<Product> Products => Set<Product>();
-    public DbSet<ProductImage> ProductImages => Set<ProductImage>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Cart> Carts => Set<Cart>();
     public DbSet<CartItem> CartItems => Set<CartItem>();
@@ -35,11 +34,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
         modelBuilder.Entity<Product>()
             .Property(x => x.OldPrice)
             .HasPrecision(18, 2);
-
-        modelBuilder.Entity<ProductImage>()
-            .HasOne(x => x.Product)
-            .WithMany(x => x.Images)
-            .HasForeignKey(x => x.ProductId);
 
         modelBuilder.Entity<CartItem>()
             .Property(x => x.Price)

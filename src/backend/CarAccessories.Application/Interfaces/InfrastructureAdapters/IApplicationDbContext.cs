@@ -13,7 +13,6 @@ public interface IApplicationDbContext
     // DbSet<AuthUserRefreshToken> AuthUserRefreshTokens { get; }
     // #endregion
     DbSet<Product> Products { get; }
-    DbSet<ProductImage> ProductImages { get; }
     public DbSet<Category> Categories { get; }
     public DbSet<Cart> Carts { get; }
     public DbSet<CartItem> CartItems { get; }

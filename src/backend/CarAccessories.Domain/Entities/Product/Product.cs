@@ -1,8 +1,9 @@
 using CarAccessories.Domain.Common;
+using CarAccessories.Domain.Interfaces;
 
 namespace CarAccessories.Domain.Entities;
 
-public class Product:BaseEntity
+public class Product:BaseAuditableEntity, IMediaAttachable
 {
     public int CategoryId { get; set; }
     public string Name { get; set; } = null!;
@@ -12,7 +13,6 @@ public class Product:BaseEntity
     public int Stock { get; set; }
     public bool IsNew { get; set; }
     public bool IsOnSale { get; set; }
-    public bool IsActive { get; set; } = true;
     public Category Category { get; set; } = null!;
-    public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
+    public virtual ICollection<MediaFile> MediaFiles { get; set; } = [];
 }

@@ -2,7 +2,7 @@
 
 namespace CarAccessories.Domain.Entities;
 
-public class CartItem:BaseEntity
+public class CartItem:BaseAuditableEntity
 {
     public int CartId { get; set; }
     public int ProductId { get; set; }
