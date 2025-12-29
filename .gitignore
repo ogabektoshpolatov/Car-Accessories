@@ -1,0 +1,55 @@
+# =========================
+# .NET / ASP.NET Core
+# =========================
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.vs/
+.vscode/
+
+# =========================
+# Visual Studio / IDE
+# =========================
+*.dbmdl
+*.pdb
+*.opendb
+*.ide
+
+# =========================
+# Frontend (Blazor / JS)
+# =========================
+node_modules/
+wwwroot/lib/
+dist/
+*.bundle.js
+
+# =========================
+# Config / Secrets
+# =========================
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# =========================
+# Uploads / User files
+# =========================
+src/backend/**/wwwroot/uploads/
+src/frontend/**/wwwroot/uploads/
+
+# =========================
+# OS / Misc
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# =========================
+# JetBrains / Rider
+# =========================
+.idea/
+*.iml
+
