@@ -23,6 +23,27 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
     public DbSet<TEntity> SetEntity<TEntity>() where TEntity : BaseEntity => Set<TEntity>();
     public IQueryable<TEntity> SetEntityNoTracking<TEntity>() where TEntity : BaseEntity => Set<TEntity>().AsNoTracking();
     public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default) => Database.BeginTransactionAsync(cancellationToken);
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e.Entity is BaseAuditableEntity && 
+                        (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+        foreach (var entityEntry in entries)
+        {
+            var entity = (BaseAuditableEntity)entityEntry.Entity;
+        
+            if (entityEntry.State == EntityState.Added)
+            {
+                entity.Created = DateTimeOffset.UtcNow;
+            }
+        
+            entity.LastModified = DateTimeOffset.UtcNow;
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
