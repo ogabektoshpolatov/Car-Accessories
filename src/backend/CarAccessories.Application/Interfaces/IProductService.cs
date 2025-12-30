@@ -12,6 +12,6 @@ public interface IProductService
     Task<ProductDetailResponseModel> GetByIdAsync(int productId, CancellationToken ct = default);
     Task<ProductDetailResponseModel> UpdateAsync(CreateOrUpdateProductRequestModel requestModel, CancellationToken ct = default);
     Task<bool> DeleteAsync(int productId, CancellationToken ct = default);
-    Task<string> UploadImageToProductAsync(int productId, IFormFile image, CancellationToken ct = default);
-    Task<bool> DeleteImageFromProductAsync(int productId, CancellationToken ct = default);
+    Task<string> UploadImageAsync(int productId, IFormFile image, CancellationToken ct = default);
+    Task<bool> DeleteImageAsync(int productId, CancellationToken ct = default);
 }

@@ -30,13 +30,12 @@ public class ProductsController(IProductService productService):BaseController
     [HttpDelete("{productId}")]
     public async Task<ResponseData<bool>> DeleteProductById([FromRoute] int productId, CancellationToken ct) 
         => await productService.DeleteAsync(productId, ct);
-    
+
     [HttpPost("{productId}")]
-    public async Task<ResponseData<bool>> UploadImageToProduct([FromRoute] int productId, IFormFile image, CancellationToken ct) 
-        => await productService.UploadImageToProductAsync(productId, image, ct);
-    
+    public async Task<ResponseData<string>> UploadImage([FromRoute] int productId, IFormFile image, CancellationToken ct)
+         => new() { Result = await productService.UploadImageAsync(productId, image, ct) };
+
     [HttpDelete("{productId}")]
-    public async Task<ResponseData<bool>> DeleteImageFromProduct([FromRoute] int productId, CancellationToken ct) 
-        => await productService.DeleteImageFromProductAsync(productId, ct);
-    
+    public async Task<ResponseData<bool>> DeleteProductImages([FromRoute] int productId, CancellationToken ct)
+         => await productService.DeleteImageAsync(productId, ct);
 }

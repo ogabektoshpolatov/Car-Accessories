@@ -98,7 +98,7 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
         return await dbContext.SaveChangesAsync(ct) > 0;
     }
 
-    public async Task<string> UploadImageToProductAsync(int productId, IFormFile image, CancellationToken ct = default)
+    public async Task<string> UploadImageAsync(int productId, IFormFile image, CancellationToken ct = default)
     {
         var fileUniqueName = await mediaFileService.SaveMediaAsync(
             formFile: image,
@@ -111,7 +111,7 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
         return StaticUrl.GetMediaFileUrl(fileUniqueName);
     }
 
-    public async Task<bool> DeleteImageFromProductAsync(int productId, CancellationToken ct = default)
+    public async Task<bool> DeleteImageAsync(int productId, CancellationToken ct = default)
     {
         var foundEntity = await dbContext.Products
             .Include(x => x.MediaFiles)

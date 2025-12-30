@@ -16,7 +16,7 @@ public class CategoriesController(ICategoryService categoryService):BaseControll
         => await categoryService.GetAllAsync(filterRequest, ct);
     
     [HttpGet("{categoryId}")]
-    public async Task<ResponseData<CategoryDetailResponseModel>> GetProductById([FromRoute] int categoryId, CancellationToken ct) 
+    public async Task<ResponseData<CategoryDetailResponseModel>> GetCategoryById([FromRoute] int categoryId, CancellationToken ct) 
         => await categoryService.GetByIdAsync(categoryId, ct);
 
     [HttpPost]
@@ -24,10 +24,10 @@ public class CategoriesController(ICategoryService categoryService):BaseControll
         => await categoryService.CreateAsync(requestModel, ct);
     
     [HttpPut]
-    public async Task<ResponseData<CategoryDetailResponseModel>> UpdateProduct(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct) 
+    public async Task<ResponseData<CategoryDetailResponseModel>> UpdateCategory(CreateOrUpdateCategoryRequestModel requestModel, CancellationToken ct) 
         => await categoryService.UpdateAsync(requestModel, ct);
     
     [HttpDelete("{categoryId}")]
-    public async Task<ResponseData<bool>> DeleteProductById([FromRoute] int categoryId, CancellationToken ct)
+    public async Task<ResponseData<bool>> DeleteCategoryById([FromRoute] int categoryId, CancellationToken ct)
         => await categoryService.DeleteAsync(categoryId, ct);
 }
