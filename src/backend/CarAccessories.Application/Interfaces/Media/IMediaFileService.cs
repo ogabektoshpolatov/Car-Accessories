@@ -14,4 +14,6 @@ public interface IMediaFileService
         int? displayOrder = null,
         CancellationToken ct = default)
         where T : class, IMediaAttachable;
+    
+    Task<bool> DeleteMediaFileAsync(string uniqueName, CancellationToken ct = default);
 }

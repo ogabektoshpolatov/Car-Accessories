@@ -71,4 +71,33 @@ public class MediaFileService(IMediaPathResolverService pathResolverService, IAp
             throw new InvalidOperationException("Failed to save media file.", ex);
         }
     }
+
+    public async Task<bool> DeleteMediaFileAsync(string uniqueName, CancellationToken ct = default)
+    {
+        var mediaFile = await dbContext.MediaFiles.FirstOrDefaultAsync(x => x.UniqueName == uniqueName, ct);
+
+        if (mediaFile is null)
+            return false;
+
+        var filePath = mediaFile.Path;
+
+        await using var transaction = await dbContext.BeginTransactionAsync(ct);
+        try
+        {
+
+            dbContext.MediaFiles.Remove(mediaFile);
+            await dbContext.SaveChangesAsync(ct);
+
+            FileHelper.DeleteFile(filePath);
+
+            await transaction.CommitAsync(ct);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(ct);
+            throw new InvalidOperationException("Failed to delete media file.", ex);
+        }
+    }
 }

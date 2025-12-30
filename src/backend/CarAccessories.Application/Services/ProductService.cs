@@ -110,4 +110,26 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
 
         return StaticUrl.GetMediaFileUrl(fileUniqueName);
     }
+
+    public async Task<bool> DeleteImageFromProductAsync(int productId, CancellationToken ct = default)
+    {
+        var foundEntity = await dbContext.Products
+            .Include(x => x.MediaFiles)
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(x => x.Id == productId, ct);
+        
+        if (foundEntity is null)
+            throw new ArgumentException(productId.ToString(), nameof(foundEntity));
+
+        if(foundEntity.MediaFiles.Count > 0)
+        {
+            foreach (var mediaFile in foundEntity.MediaFiles)
+            {
+                await mediaFileService.DeleteMediaFileAsync(mediaFile.UniqueName, ct);
+            }
+        }
+
+        // dbContext.Products.Remove(foundEntity);
+        return await dbContext.SaveChangesAsync(ct) > 0;
+    }
 }
