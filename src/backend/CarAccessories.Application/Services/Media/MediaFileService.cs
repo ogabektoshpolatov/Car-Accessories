@@ -100,4 +100,23 @@ public class MediaFileService(IMediaPathResolverService pathResolverService, IAp
             throw new InvalidOperationException("Failed to delete media file.", ex);
         }
     }
+
+    public async Task<(byte[] fileBytes, string fileOriginalName, string contentType)> GetMediaFileAsync(string uniqueName, CancellationToken ct = default)
+    {
+        var mediaFile = await dbContext.MediaFiles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(mf => mf.UniqueName == uniqueName, ct);
+
+        if (mediaFile is null)
+            throw new FileNotFoundException("Media file not found.", uniqueName);
+        
+        if (!File.Exists(mediaFile.Path))
+            throw new FileNotFoundException("Media file does not exist on disk.", mediaFile.Path);
+
+        var mediaFileBytes = await File.ReadAllBytesAsync(mediaFile.Path, ct);
+
+        return (mediaFileBytes,
+            mediaFile.FileOriginalName,
+            mediaFile.ContentType);
+    }
 }
