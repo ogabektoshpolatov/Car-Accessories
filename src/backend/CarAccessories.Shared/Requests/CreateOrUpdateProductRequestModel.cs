@@ -4,7 +4,7 @@ using CarAccessories.Shared.Common;
 
 namespace CarAccessories.Shared.Requests;
 
-public class CreateOrUpdateProductRequestModel:BaseAuditResponseModel
+public class CreateOrUpdateProductRequestModel : BaseRequestModel
 {
     public int CategoryId { get; set; }
     public string Name { get; set; } = null!;

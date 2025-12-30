@@ -1,49 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace CarAccessories.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Added_Tables : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AuthRole",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    NormalizedName = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthRole", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AuthUser",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
-                    FullName = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LastLogin = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthUser", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
@@ -51,10 +17,9 @@ namespace CarAccessories.Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Created = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<int>(type: "INTEGER", nullable: true),
-                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<long>(type: "INTEGER", nullable: false),
                     LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -70,44 +35,23 @@ namespace CarAccessories.Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Slug = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    ParentId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Created = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<int>(type: "INTEGER", nullable: true),
-                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true)
+                    LastModified = table.Column<long>(type: "INTEGER", nullable: false),
+                    LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AuthUserRole",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthUserRole", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AuthUserRole_AuthRole_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AuthRole",
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AuthUserRole_AuthUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AuthUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,18 +62,17 @@ namespace CarAccessories.Infrastructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Slug = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OldPrice = table.Column<decimal>(type: "TEXT", nullable: true),
+                    Price = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
+                    OldPrice = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false),
                     IsNew = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsOnSale = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Created = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<int>(type: "INTEGER", nullable: true),
-                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true)
+                    LastModified = table.Column<long>(type: "INTEGER", nullable: false),
+                    LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,10 +94,10 @@ namespace CarAccessories.Infrastructure.Migrations
                     CartId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Price = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
+                    Created = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<int>(type: "INTEGER", nullable: true),
-                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<long>(type: "INTEGER", nullable: false),
                     LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -176,40 +119,33 @@ namespace CarAccessories.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductImages",
+                name: "MediaFiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
-                    IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Path = table.Column<string>(type: "TEXT", nullable: false),
+                    FileOriginalName = table.Column<string>(type: "TEXT", nullable: false),
+                    UniqueName = table.Column<string>(type: "TEXT", nullable: false),
+                    ContentType = table.Column<string>(type: "TEXT", nullable: false),
+                    FileSize = table.Column<long>(type: "INTEGER", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "INTEGER", nullable: true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Created = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<int>(type: "INTEGER", nullable: true),
-                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<long>(type: "INTEGER", nullable: false),
                     LastModifiedBy = table.Column<int>(type: "INTEGER", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductImages", x => x.Id);
+                    table.PrimaryKey("PK_MediaFiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductImages_Products_ProductId",
+                        name: "FK_MediaFiles_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuthUserRole_RoleId",
-                table: "AuthUserRole",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuthUserRole_UserId",
-                table: "AuthUserRole",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
@@ -222,8 +158,13 @@ namespace CarAccessories.Infrastructure.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductImages_ProductId",
-                table: "ProductImages",
+                name: "IX_Categories_ParentId",
+                table: "Categories",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaFiles_ProductId",
+                table: "MediaFiles",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -236,19 +177,10 @@ namespace CarAccessories.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AuthUserRole");
-
-            migrationBuilder.DropTable(
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "ProductImages");
-
-            migrationBuilder.DropTable(
-                name: "AuthRole");
-
-            migrationBuilder.DropTable(
-                name: "AuthUser");
+                name: "MediaFiles");
 
             migrationBuilder.DropTable(
                 name: "Carts");

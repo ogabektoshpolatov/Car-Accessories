@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAccessories.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251218050430_remake tables")]
-    partial class remaketables
+    [Migration("20251230063957_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,88 +20,14 @@ namespace CarAccessories.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthRole");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset?>("LastLogin")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthUser");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AuthUserRole");
-                });
-
             modelBuilder.Entity("CarAccessories.Domain.Entities.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Created")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("INTEGER");
@@ -109,8 +35,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("LastModified")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("INTEGER");
@@ -132,8 +58,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Created")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("INTEGER");
@@ -141,8 +67,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("LastModified")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("INTEGER");
@@ -172,8 +98,8 @@ namespace CarAccessories.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Created")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("INTEGER");
@@ -184,8 +110,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("LastModified")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("INTEGER");
@@ -204,6 +130,59 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("CarAccessories.Domain.Entities.MediaFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Created")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FileOriginalName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("LastModified")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UniqueName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("MediaFiles");
+                });
+
             modelBuilder.Entity("CarAccessories.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -213,8 +192,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Created")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("INTEGER");
@@ -231,8 +210,8 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Property<bool>("IsOnSale")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("LastModified")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("INTEGER");
@@ -257,63 +236,6 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset>("LastModified")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("LastModifiedBy")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUserRole", b =>
-                {
-                    b.HasOne("CarAccessories.Domain.Entities.AuthRole", "AuthRole")
-                        .WithMany("AuthUserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarAccessories.Domain.Entities.AuthUser", "AuthUser")
-                        .WithMany("AuthUserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AuthRole");
-
-                    b.Navigation("AuthUser");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.CartItem", b =>
@@ -345,6 +267,13 @@ namespace CarAccessories.Infrastructure.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("CarAccessories.Domain.Entities.MediaFile", b =>
+                {
+                    b.HasOne("CarAccessories.Domain.Entities.Product", null)
+                        .WithMany("MediaFiles")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("CarAccessories.Domain.Entities.Product", b =>
                 {
                     b.HasOne("CarAccessories.Domain.Entities.Category", "Category")
@@ -354,27 +283,6 @@ namespace CarAccessories.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.ProductImage", b =>
-                {
-                    b.HasOne("CarAccessories.Domain.Entities.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthRole", b =>
-                {
-                    b.Navigation("AuthUserRoles");
-                });
-
-            modelBuilder.Entity("CarAccessories.Domain.Entities.AuthUser", b =>
-                {
-                    b.Navigation("AuthUserRoles");
                 });
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Cart", b =>
@@ -391,7 +299,7 @@ namespace CarAccessories.Infrastructure.Migrations
 
             modelBuilder.Entity("CarAccessories.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("MediaFiles");
                 });
 #pragma warning restore 612, 618
         }

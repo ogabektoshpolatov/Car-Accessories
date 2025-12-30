@@ -2,7 +2,7 @@
 
 namespace CarAccessories.Domain.Common;
 
-public class BaseAuditableEntity:BaseEntity
+public abstract class BaseAuditableEntity:BaseEntity
 {
     public DateTimeOffset Created { get; set; }
     public int? CreatedBy { get; set; }
@@ -14,5 +14,5 @@ public class BaseAuditableEntity:BaseEntity
     public string? CreatedByFullName { get; set; }
 
     [NotMapped]
-    public string? LastModifiedByFullName { get; set; }
+    public string? LastModifiedByFullName { get; set; } 
 }

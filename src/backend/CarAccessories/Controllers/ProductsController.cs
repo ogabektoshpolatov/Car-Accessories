@@ -30,4 +30,9 @@ public class ProductsController(IProductService productService):BaseController
     [HttpDelete("{productId}")]
     public async Task<ResponseData<bool>> DeleteProductById([FromRoute] int productId, CancellationToken ct) 
         => await productService.DeleteAsync(productId, ct);
+    
+    [HttpPost("{productId}")]
+    public async Task<ResponseData<bool>> UploadImageToProduct([FromRoute] int productId, IFormFile image, CancellationToken ct) 
+        => await productService.UploadImageToProductAsync(productId, image, ct);
+    
 }

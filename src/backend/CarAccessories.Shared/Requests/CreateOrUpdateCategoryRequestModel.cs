@@ -2,7 +2,7 @@
 
 namespace CarAccessories.Shared.Requests;
 
-public class CreateOrUpdateCategoryRequestModel:BaseAuditResponseModel
+public class CreateOrUpdateCategoryRequestModel : BaseRequestModel
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

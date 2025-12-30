@@ -3,6 +3,7 @@ using CarAccessories.Domain.Common;
 using CarAccessories.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarAccessories.Infrastructure.Persistence;
 
@@ -14,6 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
     // public DbSet<AuthUserRole> AuthUserRoles => Set<AuthUserRole>();
     // public DbSet<AuthUserRefreshToken> AuthUserRefreshTokens => Set<AuthUserRefreshToken>();
     // #endregion
+    public DbSet<MediaFile> MediaFiles => Set<MediaFile>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Cart> Carts => Set<Cart>();
@@ -45,5 +47,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options):DbContext(opti
             .HasForeignKey(e => e.ParentId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
+
+        if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var properties = entityType.ClrType.GetProperties().Where(p => p.PropertyType == typeof(DateTimeOffset)
+                                                                               || p.PropertyType == typeof(DateTimeOffset?));
+                foreach (var property in properties)
+                {
+                    modelBuilder
+                        .Entity(entityType.Name)
+                        .Property(property.Name)
+                        .HasConversion(new DateTimeOffsetToBinaryConverter());
+                }
+            }
+        }
+
     }
 }

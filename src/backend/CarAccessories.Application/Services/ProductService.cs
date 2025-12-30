@@ -1,14 +1,16 @@
 using AutoMapper.QueryableExtensions;
 using CarAccessories.Application.Common.QueryFilter;
+using CarAccessories.Application.Constants;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Domain.Entities;
 using CarAccessories.Shared.Requests;
 using CarAccessories.Shared.Responses;
+using Microsoft.AspNetCore.Http;
 
 namespace CarAccessories.Application.Services;
 
-public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IProductService
+public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMediaFileService mediaFileService):IProductService
 {
     public async Task<PageList<ProductResponseModel>> GetAllAsync(FilterRequest filterRequest, CancellationToken ct = default)
     {
@@ -94,5 +96,18 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper):IPr
         
         dbContext.Products.Remove(entity);
         return await dbContext.SaveChangesAsync(ct) > 0;
+    }
+
+    public async Task<string> UploadImageToProductAsync(int productId, IFormFile image, CancellationToken ct = default)
+    {
+        var fileUniqueName = await mediaFileService.SaveMediaAsync(
+            formFile: image,
+            entityId: productId,
+            attachableDbSet: dbContext.Products,
+            overwrite: true,
+            displayOrder: 1,
+            ct: ct);
+
+        return StaticUrl.GetMediaFileUrl(fileUniqueName);
     }
 }
