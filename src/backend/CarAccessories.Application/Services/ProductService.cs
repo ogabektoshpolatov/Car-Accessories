@@ -98,20 +98,20 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
         return await dbContext.SaveChangesAsync(ct) > 0;
     }
 
-    public async Task<string> UploadImageAsync(int productId, IFormFile image, CancellationToken ct = default)
+    public async Task<string> ReplaceProductImageAsync(int productId, int displayOrder, IFormFile image, CancellationToken ct = default)
     {
         var fileUniqueName = await mediaFileService.SaveMediaAsync(
             formFile: image,
             entityId: productId,
             attachableDbSet: dbContext.Products,
             overwrite: true,
-            displayOrder: 1,
+            displayOrder: displayOrder,
             ct: ct);
 
         return StaticUrl.GetMediaFileUrl(fileUniqueName);
     }
-
-    public async Task<bool> DeleteImageAsync(int productId, CancellationToken ct = default)
+    
+    public async Task<bool> DeleteAllImageAsync(int productId, CancellationToken ct = default)
     {
         var foundEntity = await dbContext.Products
             .Include(x => x.MediaFiles)
@@ -128,8 +128,42 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
                 await mediaFileService.DeleteMediaFileAsync(mediaFile.UniqueName, ct);
             }
         }
-
-        // dbContext.Products.Remove(foundEntity);
+        
         return await dbContext.SaveChangesAsync(ct) > 0;
+    }
+
+    public async Task<List<string>> UploadImagesAsync(int productId, List<IFormFile> images, CancellationToken ct = default)
+    {
+        if (images == null || images.Count == 0)
+            throw new ArgumentException("No images provided.");
+
+        var product = await dbContext.Products
+            .Include(x => x.MediaFiles)
+            .FirstOrDefaultAsync(x => x.Id == productId, ct);
+
+        if (product is null)
+            throw new ArgumentException("Product not found.");
+
+        var nextDisplayOrder = product.MediaFiles.Any()
+            ? product.MediaFiles.Max(x => x.DisplayOrder ?? 1) + 1
+            : 1;
+
+        var result = new List<string>();
+
+        foreach (var image in images)
+        {
+            var uniqueName = await mediaFileService.SaveMediaAsync(
+                formFile: image,
+                entityId: productId,
+                attachableDbSet: dbContext.Products,
+                overwrite: false,
+                displayOrder: nextDisplayOrder,
+                ct: ct);
+
+            result.Add(StaticUrl.GetMediaFileUrl(uniqueName));
+            nextDisplayOrder++;
+        }
+
+        return result;
     }
 }

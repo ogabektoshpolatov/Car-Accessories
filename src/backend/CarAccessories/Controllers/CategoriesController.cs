@@ -5,7 +5,7 @@ using CarAccessories.Shared.Requests;
 using CarAccessories.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarAccessories.Server.Controllers;
+namespace CarAccessories.Controllers;
 
 public class CategoriesController(ICategoryService categoryService):BaseController
 {

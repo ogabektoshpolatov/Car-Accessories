@@ -10,4 +10,5 @@ public class ProductDetailResponseModel:BaseAuditResponseModel
     public decimal? OldPrice { get; set; } 
     public bool IsOnSale { get; set; }  
     public int Stock { get; set; }
+    public List<MediaFileResponseModel> MediaFiles { get; set; } = null!;
 }

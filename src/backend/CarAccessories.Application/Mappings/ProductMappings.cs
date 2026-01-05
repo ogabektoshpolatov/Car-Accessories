@@ -9,7 +9,8 @@ public class ProductMappings : Profile
     public ProductMappings()
     {
         CreateMap<Product, ProductResponseModel>();
-        CreateMap<Product, ProductDetailResponseModel>();
+        CreateMap<Product, ProductDetailResponseModel>()
+            .ForMember(dest => dest.MediaFiles, opt => opt.MapFrom(src => src.MediaFiles));
         CreateMap<CreateOrUpdateProductRequestModel, Product>();
     }
 }

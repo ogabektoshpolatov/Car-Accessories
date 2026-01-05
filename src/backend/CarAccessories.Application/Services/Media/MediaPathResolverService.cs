@@ -2,10 +2,11 @@
 using CarAccessories.Shared.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace CarAccessories.Application.Services;
 
-public class MediaPathResolverService(IHostingEnvironment env, IConfiguration configuration) : IMediaPathResolverService
+public class MediaPathResolverService(IWebHostEnvironment env, IConfiguration configuration) : IMediaPathResolverService
 {
     public string GetStoragePath(Type entityType)
     {
