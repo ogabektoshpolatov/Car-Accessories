@@ -59,7 +59,7 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
             .FirstOrDefaultAsync(ct);
         
         if(foundProduct is null)
-            throw new ArgumentException($"Product with ID {productId} does not exist.", nameof(productId));
+            throw new NotFoundException($"Product with ID {productId} does not exist.");
         return foundProduct;
     }
 
