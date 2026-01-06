@@ -1,4 +1,4 @@
-﻿namespace CarAccessories.Application.Exceptions;
+﻿namespace CarAccessories.Domain.Exceptions;
 
 public class ExceptionMessages
 {

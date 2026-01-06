@@ -2,6 +2,7 @@ using CarAccessories;
 using CarAccessories.Application;
 using CarAccessories.Components;
 using CarAccessories.Infrastructure;
+using CarAccessories.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddRazorComponents()
 
 var app = builder.Build();
 
+app.UseErrorHandling();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,7 +25,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
 

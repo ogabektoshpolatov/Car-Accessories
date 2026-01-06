@@ -1,7 +1,7 @@
 using AutoMapper.QueryableExtensions;
 using CarAccessories.Application.Common.QueryFilter;
 using CarAccessories.Application.Constants;
-using CarAccessories.Application.Exceptions;
+using CarAccessories.Domain.Exceptions;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Domain.Entities;
@@ -59,7 +59,7 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
             .FirstOrDefaultAsync(ct);
         
         if(foundProduct is null)
-            throw new NotFoundException($"Product with ID {productId} does not exist.");
+            throw new BadRequestException($"Product with ID {productId} does not exist.");
         return foundProduct;
     }
 
