@@ -1,6 +1,7 @@
 using AutoMapper.QueryableExtensions;
 using CarAccessories.Application.Common.QueryFilter;
 using CarAccessories.Application.Constants;
+using CarAccessories.Application.Exceptions;
 using CarAccessories.Application.Interfaces.InfrastructureAdapters;
 using CarAccessories.Application.Interfaces;
 using CarAccessories.Domain.Entities;
@@ -135,14 +136,14 @@ public class ProductService(IApplicationDbContext dbContext, IMapper mapper, IMe
     public async Task<List<string>> UploadImagesAsync(int productId, List<IFormFile> images, CancellationToken ct = default)
     {
         if (images == null || images.Count == 0)
-            throw new ArgumentException("No images provided.");
+            throw new NotFoundException("No images provided.");
 
         var product = await dbContext.Products
             .Include(x => x.MediaFiles)
             .FirstOrDefaultAsync(x => x.Id == productId, ct);
 
         if (product is null)
-            throw new ArgumentException("Product not found.");
+            throw new NotFoundException("Product not found.");
 
         var nextDisplayOrder = product.MediaFiles.Any()
             ? product.MediaFiles.Max(x => x.DisplayOrder ?? 1) + 1
