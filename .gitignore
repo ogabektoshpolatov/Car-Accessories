@@ -36,8 +36,7 @@ secrets.json
 # =========================
 # Uploads / User files
 # =========================
-src/backend/**/wwwroot/media/
-src/frontend/**/wwwroot/uploads/
+src/backend/**/wwwroot
 
 # =========================
 # OS / Misc
