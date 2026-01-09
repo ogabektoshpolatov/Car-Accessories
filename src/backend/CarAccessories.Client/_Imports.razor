@@ -7,3 +7,157 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using CarAccessories.Client
+
+
+@* *@
+@* > **Blazor Web App’da har bir component:** *@
+@* > *@
+@* > * interaktiv bo‘ladimi yoki yo‘qmi *@
+@* > * qayerda ishlaydimi (Server / WASM) *@
+@* > *@
+@* > 👉 **buni SEN belgilaysan** *@
+@* *@
+@* --- *@
+@* *@
+@* ## 2️⃣ QANDAY QILIB TANLANADI? *@
+@* *@
+@* ### 📌 `@rendermode` orqali *@
+@* *@
+@* ```razor *@
+@* @rendermode InteractiveServer *@
+@* @rendermode InteractiveWebAssembly *@
+@* @rendermode InteractiveAuto *@
+@* ``` *@
+@* *@
+@* Bu **faqat interaktiv componentlarga kerak**. *@
+@* *@
+@* --- *@
+@* *@
+@* ## 3️⃣ FUNKSIYASIGA QARAB QANDAY TANLANADI? *@
+@* *@
+@* ### 🔹 1. Faqat ko‘rsatish (read-only UI) *@
+@* *@
+@* ❌ interaktivlik kerak emas *@
+@* *@
+@* ```razor *@
+@* <h1>About us</h1> *@
+@* <p>Company info...</p> *@
+@* ``` *@
+@* *@
+@* 👉 **SSR yetarli** *@
+@* 👉 `@rendermode` YO‘Q *@
+@* *@
+@* 📌 Misollar: *@
+@* *@
+@* * Home *@
+@* * About *@
+@* * Blog post *@
+@* * SEO page *@
+@* *@
+@* --- *@
+@* *@
+@* ### 🔹 2. Oddiy interaktivlik (form, button) *@
+@* *@
+@* ✅ interaktivlik kerak *@
+@* *@
+@* ```razor *@
+@* @rendermode InteractiveServer *@
+@* ``` *@
+@* *@
+@* 📌 Misollar: *@
+@* *@
+@* * Admin panel *@
+@* * Login *@
+@* * CRUD form *@
+@* * Dashboard *@
+@* *@
+@* 🧠 Sabab: *@
+@* *@
+@* * tez ochiladi *@
+@* * logic serverda *@
+@* *@
+@* --- *@
+@* *@
+@* ### 🔹 3. Og‘ir UI / tez interaction *@
+@* *@
+@* ```razor *@
+@* @rendermode InteractiveWebAssembly *@
+@* ``` *@
+@* *@
+@* 📌 Misollar: *@
+@* *@
+@* * Chart *@
+@* * Drag & drop *@
+@* * Offline kerak *@
+@* * Complex UI *@
+@* *@
+@* 🧠 Sabab: *@
+@* *@
+@* * serverga event yubormaydi *@
+@* * juda tez *@
+@* *@
+@* --- *@
+@* *@
+@* ### 🔹 4. Ishonching yo‘qmi? *@
+@* *@
+@* ```razor *@
+@* @rendermode InteractiveAuto *@
+@* ``` *@
+@* *@
+@* 📌: *@
+@* *@
+@* * Default tavsiya *@
+@* * Browser o‘zi tanlaydi *@
+@* *@
+@* --- *@
+@* *@
+@* ## 4️⃣ REAL MISOL (BIR LOYIHADA HAR XIL) *@
+@* *@
+@* ``` *@
+@* /Pages *@
+@* ├─ Home.razor        → SSR only *@
+@* ├─ About.razor       → SSR only *@
+@* ├─ Login.razor       → InteractiveServer *@
+@* ├─ Dashboard.razor   → InteractiveServer *@
+@* ├─ Chart.razor       → InteractiveWebAssembly *@
+@* ``` *@
+@* *@
+@* --- *@
+@* *@
+@* ## 5️⃣ MUHIM OG‘OHLIK ⚠️ *@
+@* *@
+@* ### ❗ Interaktiv component: *@
+@* *@
+@* * SignalR yoki WASM yuklaydi *@
+@* * xotira va trafik ishlatadi *@
+@* *@
+@* Shuning uchun: *@
+@* *@
+@* > **HAMMA componentni interaktiv qilma** *@
+@* *@
+@* --- *@
+@* *@
+@* ## 6️⃣ ENG TO‘G‘RI YONDASHUV (BEST PRACTICE) *@
+@* *@
+@* 1️⃣ Default: **SSR** *@
+@* 2️⃣ Kerak bo‘lsa: **Server** *@
+@* 3️⃣ Og‘ir bo‘lsa: **WASM** *@
+@* 4️⃣ Ishonching yo‘q bo‘lsa: **Auto** *@
+@* *@
+@* --- *@
+@* *@
+@* ## 7️⃣ XULOSA *@
+@* *@
+@* ✅ Ha, **Blazor Web App’da interaktivlik component-level** *@
+@* ✅ **SEN qaror qilasan** *@
+@* ✅ Funksiyasiga qarab tanlanadi *@
+@* ✅ Bu Blazor’ni juda kuchli qiladi *@
+@* *@
+@* --- *@
+@* *@
+@* Agar xohlasang keyingi qadamda: *@
+@* *@
+@* * qaysi component interaktiv bo‘lmasligi kerak *@
+@* * `@rendermode` ni layoutda qo‘yish xatolari *@
+@* * real production arxitektura *@
+

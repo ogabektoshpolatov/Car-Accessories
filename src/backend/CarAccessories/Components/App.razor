@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@* 1️⃣ App.razor – Root Component (Asosiy Komponent) *@
+@* *@
+@* Joylashuvi: Components/App.razor *@
+@* *@
+@* Vazifasi: Bu butun Blazor ilovangizning ildizi. Ya’ni, birinchi render qilinadigan komponent. *@
+@* *@
+@* Analogi: Bu HTML “qobiq” (shell), ilovangizni o‘rab turadi. *@
+@* App.razor – bu Blazor ilovangizning ildizi, u HTML tuzilmasini beradi, CSS va JavaScript’ni bog‘laydi, va Router orqali sahifalarni navigatsiya qiladi. *@
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -9,12 +17,14 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="CarAccessories.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
+    <RadzenTheme Theme="material" />
     <HeadOutlet />
 </head>
 
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
 </body>
 
 </html>

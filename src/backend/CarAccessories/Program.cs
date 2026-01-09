@@ -3,6 +3,7 @@ using CarAccessories.Application;
 using CarAccessories.Components;
 using CarAccessories.Infrastructure;
 using CarAccessories.Middlewares;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.AddPresentation();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
 
