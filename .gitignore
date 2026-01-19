@@ -36,7 +36,7 @@ secrets.json
 # =========================
 # Uploads / User files
 # =========================
-src/backend/**/wwwroot/Uploads
+src/backend/**/wwwroot/media
 
 # =========================
 # OS / Misc
@@ -52,6 +52,6 @@ Thumbs.db
 .idea/
 *.iml
 
-# # Ignore SQLite database file
-# MyDatabase.db
+# Ignore SQLite database file
+MyDatabase.db
 
