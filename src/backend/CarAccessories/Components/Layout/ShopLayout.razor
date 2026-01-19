@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Security.Cryptography
+@using CarAccessories.Application.Interfaces
+@inherits LayoutComponentBase
+@inject ICategoryService CategoryService
 
 <RadzenLayout style="position: relative">
     <RadzenHeader>
@@ -7,14 +10,16 @@
             <RadzenLabel Text="Header" />
         </RadzenStack>
     </RadzenHeader>
-    <RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded" style="position: absolute">
+    <RadzenSidebar Responsive="true" @bind-Expanded="@sidebarExpanded" style="position: absolute">
         <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Home" Icon="home" />
-            <RadzenPanelMenuItem Text="Users" Icon="account_box" />
+            @if (categories != null)
+            {
+                @foreach (var category in categories)
+                {
+                    <RadzenPanelMenuItem Text="@category.Name" />
+                }
+            }
         </RadzenPanelMenu>
-        <div class="rz-p-4">
-            Sidebar
-        </div>
     </RadzenSidebar>
     <RadzenBody>
         <div class="rz-p-4">
@@ -27,5 +32,6 @@
 </RadzenLayout>
 
 @code {
-    bool sidebarExpanded = false;
+    bool sidebarExpanded = true;
+    
 }

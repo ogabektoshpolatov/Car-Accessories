@@ -10,4 +10,5 @@ public class ProductResponseModel:BaseAuditResponseModel
     public decimal? OldPrice { get; set; } 
     public bool IsOnSale { get; set; }  
     public int Stock { get; set; }
+    public bool IsNew { get; set; }
 }

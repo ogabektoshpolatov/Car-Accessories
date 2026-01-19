@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZVHjm8agVfw=",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\Car-Accessories\\src\\backend\\CarAccessories.Shared\\CarAccessories.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ogabek_toshpolatov\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
+    "C:\\Users\\ogabek_toshpolatov\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
